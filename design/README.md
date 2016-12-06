@@ -66,3 +66,23 @@ These interception points could also be used for logging/auditing but it needs t
 TODO: Mappings should be opinionated? Explicit? Initial thought is to provide a simple mapping interface and an adapter can be written for that. Can supply one for AutoMapper via a package.
 
 An opinionated mapping could use something like [AutoMapper Self Config](https://github.com/dburriss/AutoMapperSelfConfig) to do mappings.
+
+A mapping could be explicitly defined by an interface `IMap<TInput, TResult>`. A schematic class would then take a more active role.
+
+```csharp
+[WireUpHttp(In = "inbox", Out = "Q", OutAs="RabbitMQ")]
+[WireUpRabbitMQ(In = "Q", Out = "B", InType = typeof(Z), OutAs="HTTP")]
+public class Schematic : IMap<X, Y>
+{
+  public Y Map(X obj)
+  {
+    // transform X into Y and return instance of Y
+  }
+}
+```
+
+## Manual configuration
+
+This is a level deeper than the `WireUpAttribute` type configuration. Th
+
+```csharp
