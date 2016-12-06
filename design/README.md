@@ -92,3 +92,12 @@ An important element is that someone can provide packages that implement other t
 ```csharp
 
 ```
+
+## Resources
+
+- [Routing documentation](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing)
+- [Middleware documentation](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware)
+- [OWIN Specification](http://owin.org/)
+- [SO question on OWIN and SOAP](http://stackoverflow.com/questions/22565488/any-way-to-get-owin-to-host-a-soap-service)
+- [Good reminder on HttpClient](https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/)
+- [Swagger middleware](https://github.com/domaindrivendev/Ahoy/tree/master/src/Swashbuckle.SwaggerUi/Application)
