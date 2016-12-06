@@ -22,7 +22,7 @@ If we used this style the example detailed earlier may look like this.
 
 ```csharp
 [WireUpHttp(In = "inbox", InType = typeof(X), Out = "Q", OutType = typeof(Y), OutAs="RabbitMQ")]
-[WireUpRabbitMQ(In = "Q", Out = "B, InType = typeof(Z), OutAs="HTTP")]
+[WireUpRabbitMQ(In = "Q", Out = "B", InType = typeof(Z), OutAs="HTTP")]
 public class Schematic // this class is arbitrary and is purely for the attributes
 {}
 ```
