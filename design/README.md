@@ -35,7 +35,7 @@ A transport represents HOW a message is received as well as HOW it is forwarded 
  
 ## Interception points
 
-These interception points could also be used for laogging/auditing but it needs to be at startup then not on a per endpoint configuration
+These interception points could also be used for logging/auditing but it needs to be at startup then not on a per endpoint configuration
 
 - message hits a route
 - before mapping
@@ -43,3 +43,7 @@ These interception points could also be used for laogging/auditing but it needs 
 - before sending to endpoint
 - after sent to endpoint
 - exception
+
+## Mapping
+
+TODO: Mappings should be opinionated? Explicit? Initial thought is to provide a simple mapping interface and an adapter can be written for that. Can supply one for AutoMapper via a package.
