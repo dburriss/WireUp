@@ -70,7 +70,7 @@ An opinionated mapping could use something like [AutoMapper Self Config](https:/
 A mapping could be explicitly defined by an interface `IMap<TInput, TResult>`. A schematic class would then take a more active role.
 
 ```csharp
-[WireUpHttp(In = "inbox", Out = "Q", OutAs="RabbitMQ")]
+[WireUpHttp(In = "inbox", InType = typeof(X), Out = "Q", OutType = typeof(Y), OutAs="RabbitMQ")]
 [WireUpRabbitMQ(In = "Q", Out = "B", InType = typeof(Z), OutAs="HTTP")]
 public class Schematic : IMap<X, Y>
 {
