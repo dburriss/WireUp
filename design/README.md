@@ -3,6 +3,8 @@
 Here I discuss design ideas and decisions. Basically WireUp hopes to make it easy to wire-up a message coming into the host, 
 forwarding that on... possibly after transforming it. The transport it receives it on might be a very different transport it forwards it on to.
 
+All configuration will be loaded from specified assemblies.
+
 ## Example:
 Message `X` is received via an HTTP POST to the host endpoint `inbox`. The host receives `X`, Transforms it to `Y`, and then places `Y` onto a RabbitMQ queue.
 The processing of `Y` is handled somewhere and that process then sends a message `Z` onto queue `Q` which the host is listening on. 
@@ -83,6 +85,10 @@ public class Schematic : IMap<X, Y>
 
 ## Manual configuration
 
-This is a level deeper than the `WireUpAttribute` type configuration. Th
+This is a level deeper than the `WireUpAttribute` type configuration. Customizing the configuration could either be providing a class and overriding a type like `WireUpHttpDefinition` where properties are set and methods like Map are overridden.
+Alternatively a configuration can be loaded from a class implementing `IHaveCustomWireUpConfiguration` that returns a `WireUpHttpDefinition`.
+An important element is that someone can provide packages that implement other transports.
 
 ```csharp
+
+```
