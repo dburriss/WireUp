@@ -4,11 +4,28 @@ Here I discuss design ideas and decisions. Basically WireUp hopes to make it eas
 forwarding that on... possibly after transforming it. The transport it receives it on might be a very different transport it forwards it on to.
 
 ## Example:
-Message `X` is received via an HTTP POST to the host. The host receives `X`, Transforms it to `Y`, and then places `Y` onto a RabbitMQ queue.
+Message `X` is received via an HTTP POST to the host endpoint `inbox`. The host receives `X`, Transforms it to `Y`, and then places `Y` onto a RabbitMQ queue.
 The processing of `Y` is handled somewhere and that process then sends a message `Z` onto queue `Q` which the host is listening on. 
 `Z` is then forwarded on to HTTP endpoint `B`.
 
 > Note that any code on this page is not necessarily production code. It could be pseudo code or just future planned or imagined code.
+
+In the following example no mapping is specified and the message is just forwarded on as a string.
+
+```csharp
+[WireUpHttp(In = "google/?q={q}", Out = "http://google.com/", OutAs="RabbitMQ")]
+public class TestHttpSchematic
+{}
+```
+
+If we used this style the example detailed earlier may look like this.
+
+```csharp
+[WireUpHttp(In = "inbox", InType = typeof(X), Out = "Q", OutType = typeof(Y), OutAs="RabbitMQ")]
+[WireUpRabbitMQ(In = "Q", Out = "B, InType = typeof(Z), OutAs="HTTP")]
+public class Schematic // this class is arbitrary and is purely for the attributes
+{}
+```
 
 ## Desired features
 
@@ -47,3 +64,5 @@ These interception points could also be used for logging/auditing but it needs t
 ## Mapping
 
 TODO: Mappings should be opinionated? Explicit? Initial thought is to provide a simple mapping interface and an adapter can be written for that. Can supply one for AutoMapper via a package.
+
+An opinionated mapping could use something like [AutoMapper Self Config](https://github.com/dburriss/AutoMapperSelfConfig) to do mappings.
