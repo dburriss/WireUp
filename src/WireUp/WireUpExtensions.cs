@@ -16,8 +16,7 @@ namespace WireUp
         public static void AddWireUpHttp(this IServiceCollection services, params Assembly[] assemblies)
         {
             //wire up providers that can return definitions from types in the assemblies
-            var types = Reflect.OnTypes.GetAllTypes(assemblies);
-            var schematics = GetWireUpSchematics(types);
+            
 
         }
 
@@ -38,14 +37,25 @@ namespace WireUp
                 return Task.FromResult(0);
             }));
             var routeBuilder = new RouteBuilder(app, defaultHandler);
-            //routeBuilder.MapVerb()
-            routeBuilder.MapVerb("GET", "google", ctx => {
-                using(var client = new HttpClient())
-                {
-                    var result = client.GetAsync("http://google.com/?q=bob").Result;
-                    return ctx.Response.WriteAsync(result.Content.ReadAsStringAsync().Result);
-                }
-            });
+
+            //this is all POC. Needs to come from 
+            var types = Reflect.OnTypes.GetAllTypes(new Assembly[] {Assembly.GetEntryAssembly()});
+            var schematics = GetWireUpSchematics(types);
+            var factory = new HttpWireUpFactory();
+            foreach (var schematicType in schematics)
+            {
+                var s = Activator.CreateInstance(schematicType);
+                var def = factory.Create(s, new DefaultMapper());
+                routeBuilder.MapVerb(def.Verb, @def.Template, def.RequestDelegate);
+            }
+            
+            //routeBuilder.MapVerb("GET", "google", ctx => {
+            //    using(var client = new HttpClient())
+            //    {
+            //        var result = client.GetAsync("http://google.com/?q=bob").Result;
+            //        return ctx.Response.WriteAsync(result.Content.ReadAsStringAsync().Result);
+            //    }
+            //});
 
             var routes = routeBuilder.Build();
             app.UseRouter(routes);
