@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Net.Http;
-using System.Reflection;
-using Microsoft.AspNetCore.Http;
 using Xunit;
 
-namespace WireUp.Test
+namespace WireUp.Http.Test
 {
     public class HttpWireUpFactoryTests
     {
@@ -49,7 +46,7 @@ namespace WireUp.Test
         {
             var sut = new HttpWireUpFactory();
             var def = CreateRouteDefinition(sut);
-            Assert.Equal("GET", def.Verb);
+            Assert.Equal("POST", def.Verb);
         }
 
         [Fact]

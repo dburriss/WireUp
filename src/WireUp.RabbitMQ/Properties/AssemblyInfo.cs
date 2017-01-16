@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WireUp.Test")]
+[assembly: AssemblyProduct("WireUp.RabbitMQ")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -16,4 +16,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4cdc5720-00fe-4ab3-9894-0676fcce5caa")]
+[assembly: Guid("5057552a-f70e-4d0e-924a-e5bd5d9c9dbd")]

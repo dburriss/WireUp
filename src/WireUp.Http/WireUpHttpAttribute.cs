@@ -2,6 +2,7 @@ using System;
 
 namespace WireUp
 {
+    [Key("HTTP")]
     public class WireUpHttpAttribute : WireUpAttribute
     {
         public string In { get; protected set; }

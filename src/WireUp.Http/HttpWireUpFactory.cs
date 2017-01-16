@@ -1,18 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace WireUp
 {
-
-    public class DefaultMapper : IMap
-    {
-        public void Map<TFrom, TTo>(TFrom fromObj, TTo toObj)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    [Key("HTTP")]
     public class HttpWireUpFactory : IRouteDefinitionFactory
     {
         public RouteDefinition Create(object obj, IMap mapper)
@@ -43,7 +39,20 @@ namespace WireUp
             return ctx =>
             {
                 //model bind to inValue
+                var data = ctx;
+                string json = string.Empty;
+                var stream = data.Request.Body;
+                using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+                {
+                    json =  reader.ReadToEnd();
+                }
+
                 //map to outValue
+                var inObj = JsonConvert.DeserializeObject(json, inType);
+                //var outObj = Activator.CreateInstance(outType);
+                //mapper.Map(inObj, outObj);
+
+                //TODO: to out transport
                 using (var client = new HttpClient())
                 {
                     var result = client.GetAsync(@out).Result;
@@ -51,26 +60,5 @@ namespace WireUp
                 }
             };
         }
-    }
-
-    public interface IMap
-    {
-        void Map<TFrom, TTo>(TFrom fromObj, TTo toObj);
-    }
-
-    public interface IWireUpHttp
-    {
-    }
-
-    public class RouteDefinition
-    {
-        public string Template { get; set; }
-        public string Verb { get; set; }
-        public RequestDelegate RequestDelegate { get; set; }
-    }
-
-    public interface IRouteDefinitionFactory
-    {
-        RouteDefinition Create(object obj, IMap mapper);
     }
 }

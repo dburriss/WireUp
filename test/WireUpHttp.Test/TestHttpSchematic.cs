@@ -1,4 +1,4 @@
-namespace WireUp.Test
+namespace WireUp.Http.Test
 {
     [WireUpHttp(
         @in: "google/?q={q}", inType: typeof(string), 

@@ -26,7 +26,7 @@ namespace WireUp
                 app.UseDeveloperExceptionPage();
             }
             
-            app.UseWireUp();
+            app.UseWireUpHttp();
 
             app.Run(async (context) =>
             {
